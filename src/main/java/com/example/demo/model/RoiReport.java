@@ -1,3 +1,4 @@
+com.example.demo.model
 
 private Long id;
 private DiscountCode discountCode;

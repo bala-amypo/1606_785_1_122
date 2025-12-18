@@ -1,4 +1,5 @@
 
+com.example.demo.model
 
 private Long id;
 private String codeValue;
