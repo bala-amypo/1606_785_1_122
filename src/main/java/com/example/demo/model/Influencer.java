@@ -1,4 +1,4 @@
-1️⃣ Influencer.java
+
 package com.example.demo.model;
 
 import jakarta.persistence.*;
@@ -18,6 +18,8 @@ public class Influencer {
     private String socialHandle;
 
     private boolean active = true;
+
+    private String email;
 
     @OneToMany(mappedBy = "influencer")
     private List<DiscountCode> discountCodes;
@@ -64,4 +66,10 @@ public class Influencer {
     public void setDiscountCodes(List<DiscountCode> discountCodes) {
         this.discountCodes = discountCodes;
     }
+    public String getEmail() {
+    return email;
+}
+    public void setEmail(String email) {
+    this.email = email;
+}
 }
