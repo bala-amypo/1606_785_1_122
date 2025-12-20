@@ -9,7 +9,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 @Service
 
-@Service
+
 public class InfluencerServiceImpl implements InfluencerService {
 
     private final InfluencerRepository influencerRepository;
