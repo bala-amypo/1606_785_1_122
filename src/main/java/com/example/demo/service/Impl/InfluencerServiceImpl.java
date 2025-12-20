@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 @Service
 
+@Service
 public class InfluencerServiceImpl implements InfluencerService {
 
     private final InfluencerRepository influencerRepository;
@@ -19,6 +20,7 @@ public class InfluencerServiceImpl implements InfluencerService {
 
     @Override
     public Influencer createInfluencer(Influencer influencer) {
+
         Optional<Influencer> existing =
                 influencerRepository.findBySocialHandle(influencer.getSocialHandle());
 
