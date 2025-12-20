@@ -1,3 +1,4 @@
+package com.example.demo.controller;
 import com.example.demo.model.Campaign;
 
 import org.springframework.web.bind.annotation.GetMapping;
