@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 import com.example.demo.model.Campaign;
 import com.example.demo.service.CampaignService;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
