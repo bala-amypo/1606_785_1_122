@@ -30,19 +30,7 @@ public class SaleTransaction {
 
     private Long customerId;
 
-    public SaleTransaction() {
-    }
-
-    public SaleTransaction(
-            DiscountCode discountCode,
-            BigDecimal transactionAmount,
-            LocalDateTime transactionDate,
-            Long customerId) {
-        this.discountCode = discountCode;
-        this.transactionAmount = transactionAmount;
-        this.transactionDate = transactionDate;
-        this.customerId = customerId;
-    }
+    public SaleTransaction() {}
 
     @PrePersist
     protected void onCreate() {
@@ -50,6 +38,8 @@ public class SaleTransaction {
             this.transactionDate = LocalDateTime.now();
         }
     }
+
+    
 
     public Long getId() {
         return id;
