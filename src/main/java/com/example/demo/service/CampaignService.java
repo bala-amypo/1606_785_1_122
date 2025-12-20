@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface CampaignService {
 
-    Campaign createCampaign(Campaign campaign);   // ✅ ADD THIS
+    Campaign createCampaign(Campaign campaign);
 
     Campaign updateCampaign(Long id, Campaign campaign);
 
@@ -13,4 +13,3 @@ public interface CampaignService {
 
     List<Campaign> getAllCampaigns();
 }
-
