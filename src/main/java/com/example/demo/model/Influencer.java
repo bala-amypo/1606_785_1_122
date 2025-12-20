@@ -1,5 +1,4 @@
 package com.example.demo.model;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 import java.util.List;
@@ -22,7 +21,7 @@ public class Influencer {
     private String email;
 
     @OneToMany(mappedBy = "influencer")
-    @JsonManagedReference
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<DiscountCode> discountCodes;
 
     public Influencer() {}
