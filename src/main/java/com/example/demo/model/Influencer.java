@@ -22,6 +22,7 @@ public class Influencer {
     private String email;
 
     @OneToMany(mappedBy = "influencer")
+    @JsonManagedReference
     private List<DiscountCode> discountCodes;
 
     public Influencer() {}
