@@ -20,23 +20,28 @@ public class DiscountCodeController {
         this.discountCodeService = discountCodeService;
     }
 
-    @GetMapping("/{id}")
-    public DiscountCode getById(@PathVariable Long id) {
-        return discountCodeService.getDiscountCodeById(id);
+    @PostMapping
+    public DiscountCode create(@RequestBody DiscountCode discountCode) {
+        return discountCodeService.createDiscountCode(discountCode);
     }
 
     @PutMapping("/{id}")
-    public DiscountCode update(@PathVariable Long id, @RequestBody DiscountCode code) {
-        return discountCodeService.updateDiscountCode(id, code);
+    public DiscountCode update(@PathVariable Long id, @RequestBody DiscountCode discountCode) {
+        return discountCodeService.updateDiscountCode(id, discountCode);
+    }
+
+    @GetMapping("/{id}")
+    public DiscountCode getById(@PathVariable Long id) {
+        return discountCodeService.getById(id);
     }
 
     @GetMapping("/influencer/{influencerId}")
     public List<DiscountCode> getByInfluencer(@PathVariable Long influencerId) {
-        return discountCodeService.getCodesForInfluencer(influencerId);
+        return discountCodeService.getByInfluencer(influencerId);
     }
 
     @GetMapping("/campaign/{campaignId}")
     public List<DiscountCode> getByCampaign(@PathVariable Long campaignId) {
-        return discountCodeService.getCodesForCampaign(campaignId);
+        return discountCodeService.getByCampaign(campaignId);
     }
 }
