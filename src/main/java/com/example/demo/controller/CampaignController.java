@@ -1,3 +1,5 @@
+package com.example.demo.controller;
+
 import com.example.demo.model.Campaign;
 import com.example.demo.service.CampaignService;
 
