@@ -22,6 +22,7 @@ public class Campaign {
     private LocalDate endDate;
 
     public Campaign() {
+        
     }
 
     public Campaign(String campaignName, LocalDate startDate, LocalDate endDate) {
