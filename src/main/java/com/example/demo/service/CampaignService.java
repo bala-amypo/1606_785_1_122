@@ -5,9 +5,12 @@ import java.util.List;
 
 public interface CampaignService {
 
+    Campaign createCampaign(Campaign campaign);   // ✅ ADD THIS
+
     Campaign updateCampaign(Long id, Campaign campaign);
 
     Campaign getCampaignById(Long id);
 
     List<Campaign> getAllCampaigns();
 }
+
