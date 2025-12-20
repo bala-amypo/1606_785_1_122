@@ -1,5 +1,4 @@
 package com.example.demo.model;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,69 +27,16 @@ public class DiscountCode {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "influencer_id")
-    @JsonBackReference
-    private Influencer influencer;
+    private Influencer influencer;   
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "campaign_id")
-    private Campaign campaign;
+    private Campaign campaign;       
 
     @OneToMany(mappedBy = "discountCode", fetch = FetchType.LAZY)
     private List<SaleTransaction> saleTransactions;
 
-    public DiscountCode() {
-    }
+    public DiscountCode() {}
 
-    public DiscountCode(String codeValue, Double discountPercentage) {
-        this.codeValue = codeValue;
-        this.discountPercentage = discountPercentage;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getCodeValue() {
-        return codeValue;
-    }
-
-    public Double getDiscountPercentage() {
-        return discountPercentage;
-    }
-
-    public Influencer getInfluencer() {
-        return influencer;
-    }
-
-    public Campaign getCampaign() {
-        return campaign;
-    }
-
-    public List<SaleTransaction> getSaleTransactions() {
-        return saleTransactions;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setCodeValue(String codeValue) {
-        this.codeValue = codeValue;
-    }
-
-    public void setDiscountPercentage(Double discountPercentage) {
-        this.discountPercentage = discountPercentage;
-    }
-
-    public void setInfluencer(Influencer influencer) {
-        this.influencer = influencer;
-    }
-
-    public void setCampaign(Campaign campaign) {
-        this.campaign = campaign;
-    }
-
-    public void setSaleTransactions(List<SaleTransaction> saleTransactions) {
-        this.saleTransactions = saleTransactions;
-    }
+   
 }

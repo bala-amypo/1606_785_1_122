@@ -51,14 +51,17 @@ public class DiscountCodeServiceImpl implements DiscountCodeService {
 
     @Override
     public DiscountCode updateDiscountCode(Long id, DiscountCode discountCode) {
+
         DiscountCode existing = discountCodeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Discount code not found"));
 
-        if (discountCode.getCodeValue() != null)
+        if (discountCode.getCodeValue() != null) {
             existing.setCodeValue(discountCode.getCodeValue());
+        }
 
-        if (discountCode.getDiscountPercentage() != null)
+        if (discountCode.getDiscountPercentage() != null) {
             existing.setDiscountPercentage(discountCode.getDiscountPercentage());
+        }
 
         return discountCodeRepository.save(existing);
     }
