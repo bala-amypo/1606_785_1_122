@@ -10,7 +10,9 @@ import com.example.demo.repository.SaleTransactionRepository;
 import com.example.demo.service.RoiService;
 import java.math.BigDecimal;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RoiServiceImpl implements RoiService {
 
     private final RoiReportRepository roiReportRepository;

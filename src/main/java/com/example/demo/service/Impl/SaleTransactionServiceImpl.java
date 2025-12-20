@@ -8,7 +8,8 @@ import com.example.demo.repository.SaleTransactionRepository;
 import com.example.demo.service.SaleTransactionService;
 import java.math.BigDecimal;
 import java.util.List;
-
+import org.springframework.stereotype.Service;
+@Service
 public class SaleTransactionServiceImpl implements SaleTransactionService {
 
     private final SaleTransactionRepository saleTransactionRepository;

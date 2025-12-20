@@ -6,6 +6,8 @@ import com.example.demo.repository.InfluencerRepository;
 import com.example.demo.service.InfluencerService;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.stereotype.Service;
+@Service
 
 public class InfluencerServiceImpl implements InfluencerService {
 
