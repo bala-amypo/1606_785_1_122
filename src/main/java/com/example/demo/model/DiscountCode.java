@@ -28,7 +28,7 @@ public class DiscountCode {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "influencer_id")
-    @JsonIgnore
+    @JsonBackReference
     private Influencer influencer;
 
     @ManyToOne(fetch = FetchType.LAZY)
