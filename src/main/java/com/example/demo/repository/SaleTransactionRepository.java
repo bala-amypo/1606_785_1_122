@@ -12,3 +12,4 @@ public interface SaleTransactionRepository extends JpaRepository<SaleTransaction
 
     List<SaleTransaction> findByDiscountCodeCampaignId(Long campaignId);
 }
+

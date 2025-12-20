@@ -24,6 +24,7 @@ public class SaleTransactionServiceImpl implements SaleTransactionService {
 
     @Override
     public SaleTransaction createSale(SaleTransaction transaction) {
+
         if (transaction.getTransactionAmount() == null
                 || transaction.getTransactionAmount().compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Transaction amount must be > 0");
