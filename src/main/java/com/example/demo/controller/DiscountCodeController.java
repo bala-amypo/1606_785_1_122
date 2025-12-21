@@ -48,4 +48,8 @@ public class DiscountCodeController {
     public List<DiscountCode> getCodesByCampaign(@PathVariable Long campaignId) {
         return discountCodeService.getByCampaign(campaignId);
     }
+    @PutMapping("/{id}/deactivate")
+    public DiscountCode deactivateCode(@PathVariable Long id) {
+        return discountCodeService.deactivateCode(id);
+    }
 }

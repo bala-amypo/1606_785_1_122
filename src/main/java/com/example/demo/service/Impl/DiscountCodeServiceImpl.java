@@ -81,4 +81,13 @@ public class DiscountCodeServiceImpl implements DiscountCodeService {
     public List<DiscountCode> getByCampaign(Long campaignId) {
         return discountCodeRepository.findByCampaignId(campaignId);
     }
+    @Override
+    public DiscountCode deactivateCode(Long id) {
+
+        DiscountCode code = discountCodeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Discount code not found"));
+
+        code.setActive(false);
+        return discountCodeRepository.save(code);
+    }
 }
