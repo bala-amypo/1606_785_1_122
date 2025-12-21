@@ -21,6 +21,8 @@ public class Campaign {
 
     private LocalDate endDate;
 
+    private Boolean active
+
     public Campaign() {
         
     }

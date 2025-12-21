@@ -36,8 +36,10 @@ public class DiscountCode {
 
     @OneToMany(mappedBy = "discountCode", fetch = FetchType.LAZY)
     private List<SaleTransaction> saleTransactions;
+    private Boolean active;
 
     
+
 
    
 
@@ -98,4 +100,11 @@ public class DiscountCode {
     public void setSaleTransactions(List<SaleTransaction> saleTransactions) {
         this.saleTransactions = saleTransactions;
     }
+    public boolean isActive() {
+    return active;
+}
+
+public void setActive(boolean active) {
+    this.active = active;
+}
 }
