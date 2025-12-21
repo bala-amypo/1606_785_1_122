@@ -10,4 +10,6 @@ public interface RoiService {
     RoiReport getReportById(Long reportId);
 
     List<RoiReport> getReportsForInfluencer(Long influencerId);
+
+    List<RoiReport> getReportsForCampaign(Long campaignId);
 }

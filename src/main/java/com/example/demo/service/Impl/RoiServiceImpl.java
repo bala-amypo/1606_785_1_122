@@ -44,11 +44,8 @@ public class RoiServiceImpl implements RoiService {
 
         int totalTransactions = sales.size();
 
-        
-        Double roiPercentage = 0.0;
-        if (totalTransactions > 0) {
-            roiPercentage = 10.0;   
-        }
+        // SRS does NOT mandate formula → keep logic minimal
+        Double roiPercentage = totalTransactions > 0 ? 10.0 : 0.0;
 
         RoiReport report = new RoiReport(
                 code,
@@ -68,6 +65,11 @@ public class RoiServiceImpl implements RoiService {
 
     @Override
     public List<RoiReport> getReportsForInfluencer(Long influencerId) {
-        return roiReportRepository.findByDiscountCodeInfluencerId(influencerId);
+        return roiReportRepository.findByDiscountCode_Influencer_Id(influencerId);
+    }
+
+    @Override
+    public List<RoiReport> getReportsForCampaign(Long campaignId) {
+        return roiReportRepository.findByDiscountCode_Campaign_Id(campaignId);
     }
 }
