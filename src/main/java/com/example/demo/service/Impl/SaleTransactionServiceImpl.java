@@ -60,4 +60,9 @@ public class SaleTransactionServiceImpl implements SaleTransactionService {
     public List<SaleTransaction> getSalesForCampaign(Long campaignId) {
         return saleTransactionRepository.findByDiscountCodeCampaignId(campaignId);
     }
+    @Override
+    public SaleTransaction getTransactionById(Long id) {
+        return saleTransactionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Sale not found"));
+    }
 }

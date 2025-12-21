@@ -21,8 +21,8 @@ public class SaleTransactionController {
     }
 
     @PostMapping
-    public SaleTransaction create(@RequestBody SaleTransaction transaction) {
-        return saleTransactionService.createSale(transaction);
+    public SaleTransaction logTransaction(@RequestBody SaleTransaction transaction) {
+        return saleTransactionService.logTransaction(transaction);
     }
 
     @GetMapping("/code/{discountCodeId}")
@@ -38,5 +38,9 @@ public class SaleTransactionController {
     @GetMapping("/campaign/{campaignId}")
     public List<SaleTransaction> byCampaign(@PathVariable Long campaignId) {
         return saleTransactionService.getSalesForCampaign(campaignId);
+    }
+    @GetMapping("/{id}")
+    public SaleTransaction getSaleById(@PathVariable Long id) {
+        return saleTransactionService.getTransactionById(id);
     }
 }
