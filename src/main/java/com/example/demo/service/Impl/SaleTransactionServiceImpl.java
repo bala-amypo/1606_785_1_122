@@ -6,9 +6,12 @@ import com.example.demo.model.SaleTransaction;
 import com.example.demo.repository.DiscountCodeRepository;
 import com.example.demo.repository.SaleTransactionRepository;
 import com.example.demo.service.SaleTransactionService;
+
 import java.math.BigDecimal;
 import java.util.List;
+
 import org.springframework.stereotype.Service;
+
 @Service
 public class SaleTransactionServiceImpl implements SaleTransactionService {
 
@@ -25,11 +28,13 @@ public class SaleTransactionServiceImpl implements SaleTransactionService {
     @Override
     public SaleTransaction createSale(SaleTransaction transaction) {
 
-        if (transaction.getTransactionAmount() == null
-                || transaction.getTransactionAmount().compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Transaction amount must be > 0");
+        
+        if (transaction.getSaleAmount() == null
+                || transaction.getSaleAmount().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Sale amount must be > 0");
         }
 
+        
         Long codeId = transaction.getDiscountCode().getId();
 
         DiscountCode code = discountCodeRepository.findById(codeId)
@@ -37,6 +42,7 @@ public class SaleTransactionServiceImpl implements SaleTransactionService {
 
         transaction.setDiscountCode(code);
 
+        
         return saleTransactionRepository.save(transaction);
     }
 
