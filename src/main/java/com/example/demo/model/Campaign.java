@@ -62,4 +62,12 @@ public class Campaign {
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
+    public boolean isActive() {
+    return active;
+}
+
+public void setActive(boolean active) {
+    this.active = active;
+}
+
 }
