@@ -1,5 +1,4 @@
 package com.example.demo.model;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,7 +27,7 @@ public class DiscountCode {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "influencer_id")
-    @JsonBackReference
+    
     private Influencer influencer;   
 
     @ManyToOne(fetch = FetchType.LAZY)
