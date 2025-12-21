@@ -34,8 +34,9 @@ public class RoiServiceImpl implements RoiService {
         DiscountCode code = discountCodeRepository.findById(discountCodeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Discount code not found"));
 
-        List<SaleTransaction> sales =
-                saleTransactionRepository.findByDiscountCodeId(discountCodeId);
+       List<SaleTransaction> sales =
+        saleTransactionRepository.findByDiscountCode_Id(discountCodeId);
+
 
         BigDecimal totalSales = BigDecimal.ZERO;
         for (SaleTransaction sale : sales) {
@@ -44,7 +45,7 @@ public class RoiServiceImpl implements RoiService {
 
         int totalTransactions = sales.size();
 
-        // SRS does NOT mandate formula → keep logic minimal
+        
         Double roiPercentage = totalTransactions > 0 ? 10.0 : 0.0;
 
         RoiReport report = new RoiReport(

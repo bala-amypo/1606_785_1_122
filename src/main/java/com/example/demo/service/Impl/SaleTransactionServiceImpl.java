@@ -47,19 +47,20 @@ public class SaleTransactionServiceImpl implements SaleTransactionService {
     }
 
     @Override
-    public List<SaleTransaction> getSalesForCode(Long discountCodeId) {
-        return saleTransactionRepository.findByDiscountCodeId(discountCodeId);
-    }
+public List<SaleTransaction> getSalesForCode(Long discountCodeId) {
+    return saleTransactionRepository.findByDiscountCode_Id(discountCodeId);
+}
 
-    @Override
-    public List<SaleTransaction> getSalesForInfluencer(Long influencerId) {
-        return saleTransactionRepository.findByDiscountCodeInfluencerId(influencerId);
-    }
+@Override
+public List<SaleTransaction> getSalesForInfluencer(Long influencerId) {
+    return saleTransactionRepository.findByDiscountCode_Influencer_Id(influencerId);
+}
 
-    @Override
-    public List<SaleTransaction> getSalesForCampaign(Long campaignId) {
-        return saleTransactionRepository.findByDiscountCodeCampaignId(campaignId);
-    }
+@Override
+public List<SaleTransaction> getSalesForCampaign(Long campaignId) {
+    return saleTransactionRepository.findByDiscountCode_Campaign_Id(campaignId);
+}
+
     @Override
     public SaleTransaction getTransactionById(Long id) {
         return saleTransactionRepository.findById(id)
