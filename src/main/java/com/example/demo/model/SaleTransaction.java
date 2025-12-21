@@ -9,8 +9,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "sale_transactions")
@@ -21,25 +23,29 @@ public class SaleTransaction {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "discount_code_id")
+    @JoinColumn(name = "discount_code_id", nullable = false)
     private DiscountCode discountCode;
 
-    private BigDecimal transactionAmount;
+    @Column(name = "sale_amount", nullable = false)
+    private BigDecimal saleAmount;
 
-    private LocalDateTime transactionDate;
+    @Column(name = "transaction_date", nullable = false)
+    private Timestamp transactionDate;
 
+    @Column(name = "customer_id", nullable = false)
     private Long customerId;
 
     public SaleTransaction() {}
 
+    // ✅ Ensures TIMESTAMP is set automatically before insert
     @PrePersist
     protected void onCreate() {
         if (this.transactionDate == null) {
-            this.transactionDate = LocalDateTime.now();
+            this.transactionDate = new Timestamp(System.currentTimeMillis());
         }
     }
 
-    
+    // Getters & Setters
 
     public Long getId() {
         return id;
@@ -49,11 +55,11 @@ public class SaleTransaction {
         return discountCode;
     }
 
-    public BigDecimal getTransactionAmount() {
-        return transactionAmount;
+    public BigDecimal getSaleAmount() {
+        return saleAmount;
     }
 
-    public LocalDateTime getTransactionDate() {
+    public Timestamp getTransactionDate() {
         return transactionDate;
     }
 
@@ -69,11 +75,11 @@ public class SaleTransaction {
         this.discountCode = discountCode;
     }
 
-    public void setTransactionAmount(BigDecimal transactionAmount) {
-        this.transactionAmount = transactionAmount;
+    public void setSaleAmount(BigDecimal saleAmount) {
+        this.saleAmount = saleAmount;
     }
 
-    public void setTransactionDate(LocalDateTime transactionDate) {
+    public void setTransactionDate(Timestamp transactionDate) {
         this.transactionDate = transactionDate;
     }
 
