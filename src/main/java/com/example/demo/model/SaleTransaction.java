@@ -37,7 +37,7 @@ public class SaleTransaction {
 
     public SaleTransaction() {}
 
-    // ✅ Ensures TIMESTAMP is set automatically before insert
+    
     @PrePersist
     protected void onCreate() {
         if (this.transactionDate == null) {
@@ -45,7 +45,7 @@ public class SaleTransaction {
         }
     }
 
-    // Getters & Setters
+    
 
     public Long getId() {
         return id;
