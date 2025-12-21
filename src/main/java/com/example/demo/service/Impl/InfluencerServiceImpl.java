@@ -41,4 +41,33 @@ public class InfluencerServiceImpl implements InfluencerService {
         return influencerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Influencer not found"));
     }
+    @Override
+    public Influencer updateInfluencer(Long id, Influencer influencer) {
+
+        Influencer existing = influencerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Influencer not found"));
+
+        // Only update allowed fields (NO LOGIC CHANGE)
+        if (influencer.getName() != null) {
+            existing.setName(influencer.getName());
+        }
+        if (influencer.getEmail() != null) {
+            existing.setEmail(influencer.getEmail());
+        }
+        if (influencer.getSocialHandle() != null) {
+            existing.setSocialHandle(influencer.getSocialHandle());
+        }
+
+        return influencerRepository.save(existing);
+    }
+
+    @Override
+    public Influencer deactivateInfluencer(Long id) {
+         Influencer influencer = influencerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Influencer not found"));
+
+        influencer.setActive(false);
+        return influencerRepository.save(influencer);
+    }
 }
+
