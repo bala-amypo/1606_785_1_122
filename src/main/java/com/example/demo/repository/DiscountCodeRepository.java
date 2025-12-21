@@ -9,4 +9,7 @@ public interface DiscountCodeRepository extends JpaRepository<DiscountCode, Long
     List<DiscountCode> findByInfluencerId(Long influencerId);
 
     List<DiscountCode> findByCampaignId(Long campaignId);
+    List<DiscountCode> findByInfluencerId(Long influencerId);
+
+    List<DiscountCode> findByCampaignId(Long campaignId);
 }

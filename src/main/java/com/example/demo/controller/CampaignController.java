@@ -43,4 +43,9 @@ public class CampaignController {
     public List<Campaign> getAllCampaigns() {
         return campaignService.getAllCampaigns();
     }
+    
+    @PutMapping("/{id}/deactivate")
+    public Campaign deactivateCampaign(@PathVariable Long id) {
+        return campaignService.deactivateCampaign(id);
+    }
 }

@@ -65,4 +65,13 @@ public class CampaignServiceImpl implements CampaignService {
     public List<Campaign> getAllCampaigns() {
         return campaignRepository.findAll();
     }
+    @Override
+    public Campaign deactivateCampaign(Long id) {
+
+        Campaign campaign = campaignRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Campaign not found"));
+
+        campaign.setActive(false);
+        return campaignRepository.save(campaign);
+    }
 }
