@@ -26,7 +26,7 @@ public class SaleTransactionServiceImpl implements SaleTransactionService {
     }
 
     @Override
-    public SaleTransaction createSale(SaleTransaction transaction) {
+    public SaleTransaction logTransaction(SaleTransaction transaction) {
 
         
         if (transaction.getSaleAmount() == null
