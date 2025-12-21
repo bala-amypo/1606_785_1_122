@@ -19,13 +19,16 @@ public class RoiReport {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "discount_code_id")
+    @JoinColumn(name = "discount_code_id", nullable = false)
     private DiscountCode discountCode;
 
+    @Column(nullable = false)
     private BigDecimal totalSales;
 
+    @Column(nullable = false)
     private Integer totalTransactions;
 
+    @Column(nullable = false)
     private Double roiPercentage;
 
     public RoiReport() {}
