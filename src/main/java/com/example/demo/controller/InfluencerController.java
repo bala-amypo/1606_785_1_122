@@ -33,4 +33,17 @@ public class InfluencerController {
     public Influencer getInfluencerById(@PathVariable Long id) {
         return influencerService.getInfluencerById(id);
     }
+    @PutMapping("/{id}")
+    public Influencer updateInfluencer(
+            @PathVariable Long id,
+            @RequestBody Influencer influencer) {
+        return influencerService.updateInfluencer(id, influencer);
+    }
+
+    
+    @PutMapping("/{id}/deactivate")
+    public Influencer deactivateInfluencer(@PathVariable Long id) {
+        return influencerService.deactivateInfluencer(id);
+    }
 }
+
