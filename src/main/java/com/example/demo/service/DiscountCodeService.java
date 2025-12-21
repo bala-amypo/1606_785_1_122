@@ -14,4 +14,5 @@ public interface DiscountCodeService {
     List<DiscountCode> getByInfluencer(Long influencerId);
 
     List<DiscountCode> getByCampaign(Long campaignId);
+    DiscountCode deactivateCode(Long id);
 }
