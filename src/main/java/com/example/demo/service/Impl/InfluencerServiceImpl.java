@@ -47,7 +47,7 @@ public class InfluencerServiceImpl implements InfluencerService {
         Influencer existing = influencerRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Influencer not found"));
 
-        // Only update allowed fields (NO LOGIC CHANGE)
+        
         if (influencer.getName() != null) {
             existing.setName(influencer.getName());
         }
