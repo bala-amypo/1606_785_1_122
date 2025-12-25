@@ -12,5 +12,7 @@ public interface CampaignService {
     Campaign getCampaignById(Long id);
 
     List<Campaign> getAllCampaigns();
-    Campaign deactivateCampaign(Long id);
+
+    void deactivateCampaign(Long id);
 }
+

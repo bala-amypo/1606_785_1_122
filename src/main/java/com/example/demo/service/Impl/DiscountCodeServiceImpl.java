@@ -1,16 +1,12 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.DiscountCode;
-import com.example.demo.model.Influencer;
-import com.example.demo.model.Campaign;
+import com.example.demo.repository.CampaignRepository;
 import com.example.demo.repository.DiscountCodeRepository;
 import com.example.demo.repository.InfluencerRepository;
-import com.example.demo.repository.CampaignRepository;
 import com.example.demo.service.DiscountCodeService;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,70 +20,49 @@ public class DiscountCodeServiceImpl implements DiscountCodeService {
             DiscountCodeRepository discountCodeRepository,
             InfluencerRepository influencerRepository,
             CampaignRepository campaignRepository) {
+
         this.discountCodeRepository = discountCodeRepository;
         this.influencerRepository = influencerRepository;
         this.campaignRepository = campaignRepository;
     }
 
     @Override
-    public DiscountCode createDiscountCode(DiscountCode discountCode) {
-
-        if (discountCode.getInfluencer() != null) {
-            Long influencerId = discountCode.getInfluencer().getId();
-            Influencer influencer = influencerRepository.findById(influencerId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Influencer not found"));
-            discountCode.setInfluencer(influencer);
-        }
-
-        if (discountCode.getCampaign() != null) {
-            Long campaignId = discountCode.getCampaign().getId();
-            Campaign campaign = campaignRepository.findById(campaignId)
-                    .orElseThrow(() -> new ResourceNotFoundException("Campaign not found"));
-            discountCode.setCampaign(campaign);
-        }
-
-        return discountCodeRepository.save(discountCode);
+    public DiscountCode createDiscountCode(DiscountCode code) {
+        return discountCodeRepository.save(code);
     }
 
     @Override
-    public DiscountCode updateDiscountCode(Long id, DiscountCode discountCode) {
-
+    public DiscountCode updateDiscountCode(Long id, DiscountCode code) {
         DiscountCode existing = discountCodeRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Discount code not found"));
+                .orElseThrow(() -> new RuntimeException("Discount code not found"));
 
-        if (discountCode.getCodeValue() != null) {
-            existing.setCodeValue(discountCode.getCodeValue());
-        }
-
-        if (discountCode.getDiscountPercentage() != null) {
-            existing.setDiscountPercentage(discountCode.getDiscountPercentage());
-        }
+        existing.setCodeValue(code.getCodeValue());
+        existing.setDiscountPercentage(code.getDiscountPercentage());
 
         return discountCodeRepository.save(existing);
     }
 
     @Override
-    public DiscountCode getById(Long id) {
+    public DiscountCode getDiscountCodeById(Long id) {
         return discountCodeRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Discount code not found"));
+                .orElseThrow(() -> new RuntimeException("Discount code not found"));
     }
 
     @Override
-    public List<DiscountCode> getByInfluencer(Long influencerId) {
-        return discountCodeRepository.findByInfluencerId(influencerId);
+    public List<DiscountCode> getCodesForInfluencer(Long influencerId) {
+        return discountCodeRepository.findByInfluencer_Id(influencerId);
     }
 
     @Override
-    public List<DiscountCode> getByCampaign(Long campaignId) {
-        return discountCodeRepository.findByCampaignId(campaignId);
+    public List<DiscountCode> getCodesForCampaign(Long campaignId) {
+        return discountCodeRepository.findByCampaign_Id(campaignId);
     }
+
     @Override
-    public DiscountCode deactivateCode(Long id) {
-
-        DiscountCode code = discountCodeRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Discount code not found"));
-
+    public void deactivateCode(Long id) {
+        DiscountCode code = getDiscountCodeById(id);
         code.setActive(false);
-        return discountCodeRepository.save(code);
+        discountCodeRepository.save(code);
     }
 }
+
