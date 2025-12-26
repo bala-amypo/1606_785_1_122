@@ -10,6 +10,7 @@ public class RoiReport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long codeId;  
 
     @ManyToOne
     private Campaign campaign;
@@ -58,5 +59,13 @@ public class RoiReport {
 
     public Timestamp getGeneratedAt() { return generatedAt; }
     public void setGeneratedAt(Timestamp generatedAt) { this.generatedAt = generatedAt; }
+    
+    public Long getCodeId() {
+        return codeId;
+    }
+
+    public void setCodeId(Long codeId) {
+        this.codeId = codeId;
+    }
 }
 
