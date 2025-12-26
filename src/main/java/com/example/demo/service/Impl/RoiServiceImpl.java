@@ -31,5 +31,11 @@ public class RoiServiceImpl implements RoiService {
         report.setCodeId(codeId);
         return roiReportRepository.save(report);
     }
+    @Override
+public RoiReport saveRoiReport(RoiReport roiReport) {
+    // Simply save whatever comes in the request body
+    return roiReportRepository.save(roiReport);
+}
+
 }
 

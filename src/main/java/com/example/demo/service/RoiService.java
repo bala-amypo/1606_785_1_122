@@ -9,5 +9,7 @@ public interface RoiService {
 
     List<RoiReport> getReportsForCampaign(Long campaignId);
     RoiReport generateRoiForCode(Long codeId);
+    RoiReport saveRoiReport(RoiReport roiReport); // new method
+
 }
 

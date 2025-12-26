@@ -30,5 +30,10 @@ public class RoiReportController {
     public ResponseEntity<List<RoiReport>> getReportsForCampaign(@PathVariable Long campaignId) {
         return ResponseEntity.ok(roiService.getReportsForCampaign(campaignId));
     }
+    @PostMapping("/create")
+public ResponseEntity<RoiReport> createRoi(@RequestBody RoiReport roiReport) {
+    RoiReport savedReport = roiService.saveRoiReport(roiReport);
+    return ResponseEntity.ok(savedReport);
+}
 }
 
