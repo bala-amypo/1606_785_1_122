@@ -8,5 +8,6 @@ public interface RoiService {
     List<RoiReport> getReportsForInfluencer(Long influencerId);
 
     List<RoiReport> getReportsForCampaign(Long campaignId);
+    RoiReport generateRoiForCode(Long codeId);
 }
 

@@ -25,5 +25,11 @@ public class RoiServiceImpl implements RoiService {
     public List<RoiReport> getReportsForCampaign(Long campaignId) {
         return roiReportRepository.findByCampaign_Id(campaignId);
     }
+    @Override
+    public RoiReport generateRoiForCode(Long codeId) {
+        RoiReport report = new RoiReport();
+        report.setCodeId(codeId);
+        return roiReportRepository.save(report);
+    }
 }
 
