@@ -2,6 +2,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.LoginRequest;
 import com.example.demo.dto.AuthResponse;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import com.example.demo.model.User;
 import com.example.demo.security.JwtUtil;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
+@SecurityRequirement(name = "bearerAuth")
 public class AuthController {
 
     private final UserService userService;
