@@ -20,7 +20,7 @@ public class SecurityConfig {
             // Authorization rules
             .authorizeHttpRequests(auth -> auth
                 // Swagger access for both roles
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").hasAnyRole("ADMIN", "MARKETER")
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 
                 // ADMIN: full POST access
                 .requestMatchers(
