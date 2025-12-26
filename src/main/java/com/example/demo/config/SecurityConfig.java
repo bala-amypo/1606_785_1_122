@@ -13,26 +13,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
       @Bean
-public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
-    UserDetails user = User.withUsername("admin")
-            .password(passwordEncoder.encode("admin123"))
-            .roles("USER")
-            .build();
-    return new InMemoryUserDetailsManager(user);
-}
-
-@Bean
-public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-}
-
-    
-
-    @Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/", "/css/**").permitAll()
+            .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/css/**").permitAll()
             .anyRequest().authenticated()
         )
         .formLogin()   // default login page
@@ -42,4 +26,18 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
     return http.build();
 }
 
+@Bean
+public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
+    var user = org.springframework.security.core.userdetails.User
+            .withUsername("admin")
+            .password(passwordEncoder.encode("admin123"))
+            .roles("USER")
+            .build();
+    return new InMemoryUserDetailsManager(user);
+}
+
+@Bean
+public PasswordEncoder passwordEncoder() {
+    return new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder();
+}
 }

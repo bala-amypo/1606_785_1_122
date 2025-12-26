@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
 
     @GetMapping("/")
-    public String home() {
-        return "index"; // Thymeleaf template in templates/index.html
+    public String homeRedirect() {
+        return "redirect:/swagger-ui/index.html";
     }
 }
