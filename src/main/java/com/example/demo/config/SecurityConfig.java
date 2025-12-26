@@ -16,25 +16,36 @@ public class SecurityConfig {
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/css/**").permitAll()
+            .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").hasAnyRole("ADMIN", "MARKETER")
+            .requestMatchers("/admin/**").hasRole("ADMIN")     // only admin
+            .requestMatchers("/marketing/**").hasRole("MARKETER") // only marketer
             .anyRequest().authenticated()
         )
-        .formLogin()   // default login page
+        .formLogin()
         .and()
         .logout().permitAll();
 
     return http.build();
 }
 
+
 @Bean
 public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
-    var user = org.springframework.security.core.userdetails.User
+    var admin = org.springframework.security.core.userdetails.User
             .withUsername("admin")
             .password(passwordEncoder.encode("admin123"))
-            .roles("USER")
+            .roles("ADMIN")  
             .build();
-    return new InMemoryUserDetailsManager(user);
+
+    var marketer = org.springframework.security.core.userdetails.User
+            .withUsername("marketer")
+            .password(passwordEncoder.encode("marketer123"))
+            .roles("MARKETER")  
+            .build();
+
+    return new InMemoryUserDetailsManager(admin, marketer);
 }
+
 
 @Bean
 public PasswordEncoder passwordEncoder() {
