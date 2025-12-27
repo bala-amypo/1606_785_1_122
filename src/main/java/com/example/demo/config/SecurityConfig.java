@@ -18,11 +18,11 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
 
-                // Swagger access
+               
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**")
                 .hasAnyRole("ADMIN", "MARKETER")
 
-                // ===== READ ACCESS (GET) → ADMIN + MARKETER =====
+                
                 .requestMatchers(HttpMethod.GET,
                         "/campaigns/**",
                         "/influencers/**",
@@ -31,7 +31,6 @@ public class SecurityConfig {
                         "/roi/**"
                 ).hasAnyRole("ADMIN", "MARKETER")
 
-                // ===== WRITE ACCESS → ADMIN ONLY =====
                 .requestMatchers(HttpMethod.POST,
                         "/campaigns/**",
                         "/influencers/**",
@@ -56,7 +55,6 @@ public class SecurityConfig {
                         "/roi/**"
                 ).hasRole("ADMIN")
 
-                // Any other request
                 .anyRequest().authenticated()
             )
             .formLogin()
