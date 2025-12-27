@@ -37,36 +37,30 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "my-secret-key-12345";
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
+    private static final String SECRET_KEY = "secret-key-demo";
 
-    public String generateToken(String username) {
+    // Updated method to match AuthController
+    public String generateToken(String email, String role, Long userId) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", role);
+        claims.put("userId", userId);
+
         return Jwts.builder()
-                .setSubject(username)
+                .setClaims(claims)
+                .setSubject(email)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 hour
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
     }
 
-    public String extractUsername(String token) {
-        return getClaims(token).getSubject();
-    }
-
-    public boolean validateToken(String token) {
-        try {
-            getClaims(token);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    private Claims getClaims(String token) {
+    public Claims extractClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)

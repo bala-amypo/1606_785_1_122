@@ -28,6 +28,7 @@
 
 package com.example.demo.security;
 
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -62,21 +63,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.substring(7);
 
-            if (jwtUtil.validateToken(token)) {
-                String username = jwtUtil.extractUsername(token);
+            try {
+                Claims claims = jwtUtil.extractClaims(token);
+                String username = claims.getSubject();
+                String role = claims.get("role", String.class);
 
                 UsernamePasswordAuthenticationToken auth =
                         new UsernamePasswordAuthenticationToken(
                                 username,
                                 null,
-                                Collections.emptyList()
+                                Collections.singletonList(() -> "ROLE_" + role)
                         );
 
-                auth.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(request)
-                );
-
+                auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(auth);
+            } catch (Exception e) {
+                // token invalid → ignore
             }
         }
 
