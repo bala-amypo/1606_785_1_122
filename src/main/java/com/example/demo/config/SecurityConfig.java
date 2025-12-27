@@ -18,25 +18,20 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http
-            .csrf(csrf -> csrf.disable())
+    http
+        .csrf(csrf -> csrf.disable())
+        .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+            .anyRequest().authenticated()
+        )
+        .addFilterBefore(jwtAuthenticationFilter,
+                UsernamePasswordAuthenticationFilter.class);
 
-            // AUTHENTICATION ONLY
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**", "/login", "/register").permitAll()
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                .anyRequest().authenticated()
-            )
+    return http.build();
+}
 
-            // KEEP formLogin → TEST SAFE
-            .formLogin()
-            .and()
-            .logout(logout -> logout.permitAll());
-
-        return http.build();
-    }
 
     @Bean
     public InMemoryUserDetailsManager userDetailsService(PasswordEncoder encoder) {
