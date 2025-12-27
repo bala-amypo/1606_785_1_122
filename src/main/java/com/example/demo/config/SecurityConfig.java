@@ -2,7 +2,6 @@ package com.example.demo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,93 +11,45 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
+    private final UserProperties props;
+
+    public SecurityConfig(UserProperties props) {
+        this.props = props;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-            // ❌ Disable CSRF for APIs & Swagger
             .csrf(csrf -> csrf.disable())
 
-            // 🔐 Authorization rules
+            // AUTHENTICATION ONLY
             .authorizeHttpRequests(auth -> auth
-
-                // ✅ Allow authentication-related endpoints (important for tests)
                 .requestMatchers("/auth/**", "/login", "/register").permitAll()
-
-                // ✅ Swagger access
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**")
-                .hasAnyRole("ADMIN", "MARKETER")
-
-                // ✅ READ access: ADMIN + MARKETER
-                .requestMatchers(HttpMethod.GET,
-                        "/campaigns/**",
-                        "/influencers/**",
-                        "/discounts/**",
-                        "/sales/**",
-                        "/roi/**"
-                ).hasAnyRole("ADMIN", "MARKETER")
-
-                // ✅ CREATE access: ADMIN only
-                .requestMatchers(HttpMethod.POST,
-                        "/campaigns/**",
-                        "/influencers/**",
-                        "/discounts/**",
-                        "/sales/**",
-                        "/roi/**"
-                ).hasRole("ADMIN")
-
-                // ✅ UPDATE access: ADMIN only
-                .requestMatchers(HttpMethod.PUT,
-                        "/campaigns/**",
-                        "/influencers/**",
-                        "/discounts/**",
-                        "/sales/**",
-                        "/roi/**"
-                ).hasRole("ADMIN")
-
-                // ✅ DELETE access: ADMIN only
-                .requestMatchers(HttpMethod.DELETE,
-                        "/campaigns/**",
-                        "/influencers/**",
-                        "/discounts/**",
-                        "/sales/**",
-                        "/roi/**"
-                ).hasRole("ADMIN")
-
-                // 🔒 Everything else requires authentication
+                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .anyRequest().authenticated()
             )
 
-            // ✅ Enable form login (browser & Swagger friendly)
+            // KEEP formLogin → TEST SAFE
             .formLogin()
-
-            // ✅ Enable logout
             .and()
             .logout(logout -> logout.permitAll());
 
         return http.build();
     }
 
-    // 👤 In-memory users (safe for testing & demo)
     @Bean
-    public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
+    public InMemoryUserDetailsManager userDetailsService(PasswordEncoder encoder) {
 
-        var admin = org.springframework.security.core.userdetails.User
-                .withUsername("admin")
-                .password(passwordEncoder.encode("admin123"))
-                .roles("ADMIN")
+        var user = org.springframework.security.core.userdetails.User
+                .withUsername(props.username)
+                .password(encoder.encode(props.password))
+                .authorities("USER") // dummy, NOT used
                 .build();
 
-        var marketer = org.springframework.security.core.userdetails.User
-                .withUsername("marketer")
-                .password(passwordEncoder.encode("marketer123"))
-                .roles("MARKETER")
-                .build();
-
-        return new InMemoryUserDetailsManager(admin, marketer);
+        return new InMemoryUserDetailsManager(user);
     }
 
-    // 🔑 Password encoder
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
