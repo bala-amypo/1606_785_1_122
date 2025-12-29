@@ -16,20 +16,20 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-            // ❌ Disable CSRF for APIs & Swagger
+           
             .csrf(csrf -> csrf.disable())
 
-            // 🔐 Authorization rules
+           
             .authorizeHttpRequests(auth -> auth
 
-                // ✅ Allow authentication-related endpoints (important for tests)
+               
                 .requestMatchers("/auth/**", "/login", "/register").permitAll()
 
-                // ✅ Swagger access
+             
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**")
                 .hasAnyRole("ADMIN", "MARKETER")
 
-                // ✅ READ access: ADMIN + MARKETER
+                
                 .requestMatchers(HttpMethod.GET,
                         "/campaigns/**",
                         "/influencers/**",
@@ -38,7 +38,7 @@ public class SecurityConfig {
                         "/roi/**"
                 ).hasAnyRole("ADMIN", "MARKETER")
 
-                // ✅ CREATE access: ADMIN only
+            
                 .requestMatchers(HttpMethod.POST,
                         "/campaigns/**",
                         "/influencers/**",
@@ -47,7 +47,6 @@ public class SecurityConfig {
                         "/roi/**"
                 ).hasRole("ADMIN")
 
-                // ✅ UPDATE access: ADMIN only
                 .requestMatchers(HttpMethod.PUT,
                         "/campaigns/**",
                         "/influencers/**",
@@ -65,21 +64,21 @@ public class SecurityConfig {
                         "/roi/**"
                 ).hasRole("ADMIN")
 
-                // 🔒 Everything else requires authentication
+             
                 .anyRequest().authenticated()
             )
 
-            // ✅ Enable form login (browser & Swagger friendly)
+         
             .formLogin()
 
-            // ✅ Enable logout
+          
             .and()
             .logout(logout -> logout.permitAll());
 
         return http.build();
     }
 
-    // 👤 In-memory users (safe for testing & demo)
+    
     @Bean
     public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {
 
@@ -98,7 +97,7 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(admin, marketer);
     }
 
-    // 🔑 Password encoder
+   
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
